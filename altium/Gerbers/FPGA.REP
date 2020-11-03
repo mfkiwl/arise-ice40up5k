@@ -1,0 +1,198 @@
+*************************************************************
+FileName = FPGA.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Layer
+      File : FPGA.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : FPGA.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D22
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : FPGA.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D27
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : FPGA.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+    D55
+    D56
+    D57
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : FPGA.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D26
+    D61
+    D63
+    D64
+    D65
+    D66
+    D67
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : FPGA.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D27
+    D43
+    D45
+    D46
+    D47
+*************************************************************
+
+*************************************************************
+Generating : Keep-Out Layer
+      File : FPGA.GKO
+
+    Adding Layer      : Keep-Out Layer
+
+
+Used DCodes :
+    D27
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : FPGA.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 4
+      File : FPGA.GM4
+
+    Adding Layer      : Mechanical 4
+
+
+Used DCodes :
+*************************************************************
+

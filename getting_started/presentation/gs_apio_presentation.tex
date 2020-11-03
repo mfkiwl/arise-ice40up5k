@@ -1,0 +1,273 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{BlueITBA}{HTML}{00558c} 
+\colorlet{beamer@blendedblue}{BlueITBA}
+\setbeamertemplate{caption}{\scriptsize\insertcaption}
+\setbeamertemplate{itemize items}[circle]
+%\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subitem}{\raisebox{0.2em}{\scalebox{0.65}{$\blacktriangleright$}}}   % Second level
+
+%\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+
+\usepackage{sansmathfonts}				% Sans Serif equations
+\usepackage[T1]{fontenc}					% Output font encoding for international characters
+\usepackage[utf8]{inputenc}				% Encoding of files: utf8
+\renewcommand*\familydefault{\sfdefault} 		% Sans Serif as default font
+\usepackage{verbatim}
+ 
+% Setup the language and its properties (choose only one)
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\addto\captionsspanish{\renewcommand{\contentsname}{Contenido}}
+
+\usepackage{ulem}
+\usepackage{graphicx}
+\usepackage{tikz}						% Required for title page
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=white,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=blue,    
+}
+\usepackage{listings}
+\usepackage{adjustbox}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+\lstset{
+	basicstyle=\scriptsize,
+	language=Verilog,
+	tabsize=2,
+	keywordstyle=\color{vblue},
+	identifierstyle=\color{black},
+	commentstyle=\color{vgreen},
+	showstringspaces=false
+}
+
+\title[Primeros Pasos]{Primeros Pasos Apio}
+\subtitle{}
+\author{Dr. Ing. Pablo \textsc{Cossutta}}
+\date{Octubre 2019}
+\logo{\includegraphics[height=1.5cm]{../../logo_itba.png}} 
+ 
+\begin{document}
+\beamertemplatenavigationsymbolsempty % Disable Nav Bar
+% Title and Intro
+\maketitle
+\logo{}
+
+\begin{frame}{Tutorial}
+¿Qué se va a hacer?
+\begin{itemize}
+	\item Instalar Python
+	\begin{itemize}
+		\item Seleccionar \texttt{pip}
+	\end{itemize}
+	\item Instalar Apio
+	\item Crear un directorio de trabajo
+	\item Cargar los archivos
+	\item Synthesis, Map, Place \& Route, Bitstream
+	\item Cargar el diseño
+	\item Simular
+\end{itemize}
+¿Qué se necesita?
+\begin{itemize}
+	\item Archivo HDL (\texttt{gs\_apio.v})
+	\item Constraints para implementación (\texttt{gs\_apio.pcf})	
+	\item Testbench (\texttt{gs\_apio\_tb.pcf})	
+\end{itemize}
+\end{frame}
+    
+\begin{frame}[fragile]{gs\_apio.v - Definition and clock divider}
+\begin{itemize}
+	\item Similar al anterior solo modificar el nombre \texttt{rgb\_reg}
+\end{itemize}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+module top(
+   output RGB0,
+   output RGB1,
+   output RGB2,
+   input clk
+);
+
+localparam DIV_N = 22;
+
+reg [DIV_N-1:0] div = 0;
+always @(posedge clk) begin
+	div <= div + 1'd1;
+end
+
+reg en;
+always @(posedge clk) begin
+	if (div==0) en <= 1'b1;
+	else en <= 1'b0;
+end
+\end{lstlisting}\end{adjustbox}\end{center}
+\column{0.5\textwidth}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+reg [2:0] rgb = 3'd0;
+always @(posedge clk) begin
+	if (en) begin
+		case (rgb)
+			3'b000:  rgb <= 3'b001;
+			3'b001:  rgb <= 3'b010;
+			3'b010:  rgb <= 3'b100;
+			3'b100:  rgb <= 3'b000;
+			default: rgb <= 3'b000;
+		endcase
+	end
+end
+\end{lstlisting}\end{adjustbox}\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{gs\_apio.v - SB\_RGBA Instantiation}
+\begin{itemize}
+	\item Cambia el nombre de la primitiva
+\end{itemize}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+SB_RGBA_DRV RGBA_DRIVER (
+	.CURREN(1'b1),
+	.RGBLEDEN(1'b1),
+	.RGB0PWM(rgb[0]),
+	.RGB1PWM(rgb[1]),
+	.RGB2PWM(rgb[2]),
+	.RGB0(RGB0),
+	.RGB1(RGB1),
+	.RGB2(RGB2)
+);
+
+// Set parameters of RGBA_DRIVER
+defparam RGBA_DRIVER.CURRENT_MODE = "0b0";
+defparam RGBA_DRIVER.RGB0_CURRENT =  "0b000001"
+defparam RGBA_DRIVER.RGB1_CURRENT =  "0b000001"
+defparam RGBA_DRIVER.RGB2_CURRENT =  "0b000001"
+
+endmodule
+\end{lstlisting}\end{adjustbox}\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Restricciones (Constraints)}
+Restricciones lógicas
+\begin{itemize}
+	\item No disponibles en Yosys
+\end{itemize}
+\vfill
+Restricciones físicas
+\begin{itemize}
+	\item Necesarias para la implementación
+	\item Hay que definir todo lo que sea E/S
+\end{itemize}
+\begin{block}{gs\_apio\_1.pcf}
+\begin{lstlisting}
+set_io clk 35
+set_io RGB0 39
+set_io RGB1 40
+set_io RGB2 41
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Testbench (analizar) \texttt{gs\_apio\_tb.v}}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+`default_nettype none
+`timescale 1 ns / 100 ps
+
+module led_cnt_tb();
+parameter DURATION = 200;
+
+reg clk;
+always #1 clk = ~clk;
+
+wire RGB0, RGB1, RGB2;
+top top_inst (.RGB0(RGB0), .RGB1(RGB1), .RGB2(RGB2), .clk(clk));
+
+initial begin
+	$dumpfile("gs_apio_tb.vcd");
+	$dumpvars(0, led_cnt_tb);
+	#(DURATION) $display("End of simulation");
+	$finish;
+end
+
+endmodule
+\end{lstlisting}\end{adjustbox}\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Primitiva faltante}
+\begin{itemize}
+	\item Necesitamos la primitiva \texttt{SB\_RGBA\_DRV} para poder simular
+\end{itemize}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+// Define primitive for simulation
+module SB_RGBA_DRV #(
+	parameter CURRENT_MODE=0,
+	parameter RGB0_CURRENT=0,
+	parameter RGB1_CURRENT=0,
+	parameter RGB2_CURRENT=0
+)(
+	input CURREN,
+	input RGBLEDEN,
+	input RGB0PWM,
+	input RGB1PWM,
+	input RGB2PWM,
+	output RGB0,
+	output RGB1,
+	output RGB2
+);
+assign RGB0 = (CURREN & RGBLEDEN) ? RGB0PWM : 1'b0;
+assign RGB1 = (CURREN & RGBLEDEN) ? RGB1PWM : 1'b0;
+assign RGB2 = (CURREN & RGBLEDEN) ? RGB2PWM : 1'b0;
+endmodule
+\end{lstlisting}\end{adjustbox}\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Testbench (corregido) \texttt{gs\_apio\_tb.v}}
+\begin{center}\begin{adjustbox}{padding=2pt 0pt 0pt 0pt, cfbox=blue!50 1pt}\begin{lstlisting}
+`default_nettype none
+`timescale 1 ns / 100 ps
+
+module top_tb();
+parameter DURATION = 200;
+
+reg clk = 0;
+always #1 clk = ~clk;
+
+wire RGB0, RGB1, RGB2;
+top top_inst (.RGB0(RGB0), .RGB1(RGB1), .RGB2(RGB2), .clk(clk));
+
+initial begin
+	$dumpfile("gs_apio_tb.vcd");
+	$dumpvars(0, top_tb);
+	#(DURATION) $display("End of simulation");
+	$finish;
+end
+
+endmodule
+\end{lstlisting}\end{adjustbox}\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Trabajo en clase (Hands On)}
+\begin{itemize}
+	\item Registrar 2 veces la entrada
+	\begin{itemize}	
+		\item Prevenir metaestabilidad
+	\end{itemize}
+	\item Realizar el debouncing de una entrada correspondiente a un pulsador
+	\begin{itemize}
+		\item Considerando un debounce de N ciclos (ambas direcciones)
+		\item Al detectar un pulso se enciende el led Rojo durante 500ms
+	\end{itemize}
+	\item Realizar un testbench completo
+	\item Implementar y verificar experimentalmente
+	\item Modificar para que no vuelva a encenderse si se mantiene el pulsador apretado
+\end{itemize}
+\end{frame}
+
+\end{document}

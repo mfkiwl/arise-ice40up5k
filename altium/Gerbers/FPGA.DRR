@@ -1,0 +1,18 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: FPGA.PcbDoc   2/5/2019  3:54:36 PM
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : FPGA-RoundHoles.TXT
+ASCII SlotHoles File : FPGA-SlotHoles.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      12mil (0.3mm)                                             Round             76        PTH        7.60inch (193.10mm)
+T2      20mil (0.508mm)                                           Slot              2         PTH        0.60inch (15.37mm)
+T3      25mil (0.635mm)                                           Round             2         PTH        0.16inch (4.00mm)
+T4      30mil (0.762mm)                                           Round             36        PTH        5.24inch (133.08mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              116
+
+Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,158 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage[onehalfspacing]{setspace}		% One half spacing
+\usepackage{hyperref}					% Hyperlinks on pdf (Should be called before Geometry)
+\usepackage[a4paper, 					% Page Layout
+                     %showframe,				% This shows the frame
+                     twoside, includehead,
+                     footskip=7mm, headsep=6mm, headheight=4.8mm,
+                     marginparsep=2mm, marginparwidth=22mm,
+                     top=25mm, bottom=25mm, inner=30mm, outer=25mm]{geometry}
+\usepackage{sansmathfonts}				% Sans Serif equations
+\usepackage[T1]{fontenc}					% Output font encoding for international characters
+\usepackage[utf8]{inputenc}				% Encoding of files: utf8
+\renewcommand*\familydefault{\sfdefault} 		% Sans Serif as default font
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{array}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\urlstyle{same}
+\usepackage{tikz}
+\RequirePackage{caption} 				% Caption customization
+\captionsetup{justification=centerlast,font=small,labelfont=sc,margin=1cm}
+
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+
+\begin{document}
+\begin{titlepage}
+	\onehalfspacing
+	\enlargethispage{0.65\baselineskip}
+	\begin{tikzpicture}[remember picture, overlay]
+		\coordinate (top_right) at 
+		    ([xshift=-2.5cm, yshift=-2.5cm]current page.north east);
+		\coordinate (top_left) at 
+		    ([xshift=2.3cm, yshift=-1.8cm]current page.north west);
+		\coordinate (bottom_right) at 
+		    ([xshift=-1.8cm, yshift=1.8cm]current page.south east);
+		\node[inner sep=0, anchor=north east] at (top_right) {\href{http://www.itba.edu.ar}{\includegraphics[height=19mm, trim={180 200 200 200}, clip]{figs/logo_itba.png}}};
+		\draw[double, line width = 0.5pt] (top_left) rectangle (bottom_right);
+	\end{tikzpicture}
+	\par
+	\vspace{-0.8cm}
+	\noindent \textbf{CENTRO DE INVESTIGACIÓN Y DESARROLLO EN}\par
+	\noindent \textbf{ELECTRONICA INDUSTRIAL (CIDEI)}\par
+	\vspace{3cm}
+	\begin{center}
+		{\Huge \textbf{ARiCE Plattform}\par}
+		{\huge \textbf{Getting Started Apio}\par}
+	\end{center}
+	\vspace{1cm}
+	\begin{center}
+		\includegraphics[width=8cm]{figs/fig1a.png}
+	\end{center}
+	\vfill
+	\noindent \textbf{AUTHORS:} Dr. Ing. Pablo \textsc{Cossutta} - Ing. Gonzalo \textsc{Castelli} - Rodrigo \textsc{Devesa} \par
+	\vfill
+	\begin{center}
+		\textbf{CIUDAD AUTÓNOMA DE BUENOS AIRES}\\
+		\textbf{2018-2019}\par
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This project is an open-source platform,shown on Fig. \ref{fig1},  based on a low cost and low consumption FPGA chip from \href{http://www.latticesemi.com}{Lattice Semiconductor}, aiming to be used in a wide range of signal processing and control applications, both for education and the industry.
+%
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm]{figs/fig1a.png}\\
+	\includegraphics[width=6cm]{figs/fig1b.png}%
+	\includegraphics[width=6cm]{figs/fig1c.png}
+	\caption{Board's view}
+	\label{fig1}
+\end{figure}
+
+%\subsection{Project file sources}
+%The following list shows the different file sources for this project:
+%\begin{itemize}
+%	\item Getting Started Guide and Documentation: \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Documents/Manuals}{GitHub manuals}
+%	\item PCB and Schematics: \href{https://workspace.circuitmaker.com/Projects/Details/Gonzalo-Castelli/FPGA-ITBA}{Circuit Maker} and \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Altium}{GitHub Altium Project Files}
+%	\item \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Examples/LedExample}{Example code} for the Lattice Radiant software.
+%\end{itemize}
+
+\section{Getting started}
+Without no previous knowledge, three main steps are necessary to use the board if you are starting from scratch. The first is to download and install the software, the second is to create a new project and include the code files needed and finally load the program to the onboard memory using a USB cable.
+
+\subsection{Downloading the software}
+Before using the board, it is necessary to set up the software to program the Lattice iCE40-UP5K FPGA chip. In this tutorial we will be utilizing the  \href{https://apiodoc.readthedocs.io/en/stable/index.html}{Apio Open Source Ecosystem for FPGAs}, which allows to verify the code and program the FPGA through a USB port.\href{https://apiodoc.readthedocs.io/en/stable/index.html}{Python 3.7+} should be previously installed in order to install Apio.
+
+During Python installation, make sure to select "\textbf{Customize Installation}". Then, on the optional features screen, select to install pip, as shown in  Fig. \ref{fig2}, as we will be using it to download the Apio packages.
+\ref{fig2}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/python_install.png}
+    \caption{Setting up the Python installation}
+    \label{fig2}
+\end{figure}
+
+Once Python is successfully installed along with Pip, you can install Apio. On Windows, open your command line console and type:
+\begin{center}
+	\texttt{pip install -U apio}
+\end{center}
+When it's finished, you will need to install Apio's packages. Use the following command:
+\begin{center}
+	\texttt{apio install -{}-all}
+\end{center}
+This installation might take a few minutes.
+
+\subsection{Creating a new project}
+After having installed the software, the next step is to create a new folder for the project and start writing the code. An example code that uses the onboard RGB LED is available for download at the GitHub repository of this project. After downloading the files, place them in an easily accessible folder from where we will run the code.
+
+Use the \texttt{cd} command followed by the path to your project's folder to change directory to that folder. For example, if your project is on a folder called "fpga\_project" in your Desktop, then use:
+\begin{center}
+	\texttt{cd Desktop/fpga\_project}
+\end{center}
+
+Once in the right folder, you need to generate the right .init configuration file for this board, as Apio supports multiple different FPGA platforms. To do this, use the command:
+
+\begin{center}
+	\texttt{apio init -{}-board upduino2}
+\end{center}
+
+Now, to make sure the project is set up correctly, you could use the command:
+\begin{center}
+	\texttt{apio build}
+\end{center}
+The folder should contain at least 3 files, one .v file with the program's code itself, one .pcf file with pinout information for the program, and the .init file we just created. If the build process is successful, you can move on to programming the FPGA board.
+ 
+\subsection{Programming the board}
+Now that the project is fully set up, we can load the program into our board to run it.
+Connect the FPGA board to the PC using the USB cable, wait a few seconds for Windows to configure the drivers, then use the following command to program the board:
+\begin{center}
+	\texttt{apio upload}
+\end{center}
+The process will take a few seconds, and if everything went right, the FPGA board should start running the program and its onboard LED should start flashing in colors.
+
+\subsection{Model simulation}
+To simulate the model the following command is used:
+\begin{center}
+	\texttt{apio sim}
+\end{center}
+
+The \href{http://gtkwave.sourceforge.net}{GTKWave} graphic environment should be load with the simulation data.
+\input{gs_common.tex}
+
+\end{document}

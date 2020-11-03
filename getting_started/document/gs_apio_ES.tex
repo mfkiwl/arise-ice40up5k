@@ -1,0 +1,162 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage[onehalfspacing]{setspace}		% One half spacing
+\usepackage{hyperref}					% Hyperlinks on pdf (Should be called before Geometry)
+\usepackage[a4paper, 					% Page Layout
+                     %showframe,				% This shows the frame
+                     twoside, includehead,
+                     footskip=7mm, headsep=6mm, headheight=4.8mm,
+                     marginparsep=2mm, marginparwidth=22mm,
+                     top=25mm, bottom=25mm, inner=30mm, outer=25mm]{geometry}
+\usepackage{sansmathfonts}				% Sans Serif equations
+\usepackage[T1]{fontenc}					% Output font encoding for international characters
+\usepackage[utf8]{inputenc}				% Encoding of files: utf8
+\renewcommand*\familydefault{\sfdefault} 		% Sans Serif as default font
+%
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\addto\captionsspanish{\renewcommand{\contentsname}{Contenido}}
+%
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{array}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\urlstyle{same}
+\usepackage{tikz}
+\RequirePackage{caption} 				% Caption customization
+\captionsetup{justification=centerlast,font=small,labelfont=sc,margin=1cm}
+
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+
+\begin{document}
+\begin{titlepage}
+	\onehalfspacing
+	\enlargethispage{0.65\baselineskip}
+	\begin{tikzpicture}[remember picture, overlay]
+		\coordinate (top_right) at 
+		    ([xshift=-2.5cm, yshift=-2.5cm]current page.north east);
+		\coordinate (top_left) at 
+		    ([xshift=2.3cm, yshift=-1.8cm]current page.north west);
+		\coordinate (bottom_right) at 
+		    ([xshift=-1.8cm, yshift=1.8cm]current page.south east);
+		\node[inner sep=0, anchor=north east] at (top_right) {\href{http://www.itba.edu.ar}{\includegraphics[height=19mm, trim={180 200 200 200}, clip]{figs/logo_itba.png}}};
+		\draw[double, line width = 0.5pt] (top_left) rectangle (bottom_right);
+	\end{tikzpicture}
+	\par
+	\vspace{-0.8cm}
+	\noindent \textbf{CENTRO DE INVESTIGACIÓN Y DESARROLLO EN}\par
+	\noindent \textbf{ELECTRONICA INDUSTRIAL (CIDEI)}\par
+	\vspace{3cm}
+	\begin{center}
+		{\Huge \textbf{Plataforma ARiCE}\par}
+		{\huge \textbf{Primeros Pasos Apio}\par}
+	\end{center}
+	\vspace{1cm}
+	\begin{center}
+		\includegraphics[width=8cm]{figs/fig1a.png}
+	\end{center}
+	\vfill
+	\noindent \textbf{AUTORES:} Dr. Ing. Pablo \textsc{Cossutta} - Ing. Gonzalo \textsc{Castelli} - Rodrigo \textsc{Devesa} \par
+	\vfill
+	\begin{center}
+		\textbf{CIUDAD AUTÓNOMA DE BUENOS AIRES}\\
+		\textbf{2018-2019}\par
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+Este proyecto es una plataforma de código abierto, la cual se muestra en la Fig. \ref{fig1}, basado en una placa FPGA de bajo costo y bajo consumo de \href{http://www.latticesemi.com}{Lattice Semiconductor}. Tiene como objetivo ser utilizada en una amplia gama de aplicaciones de procesamiento de señales y control, tanto para la educación como para la industria.
+%
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm]{figs/fig1a.png}\\
+	\includegraphics[width=6cm]{figs/fig1b.png}%
+	\includegraphics[width=6cm]{figs/fig1c.png}
+	\caption{Vistas de la placa}
+	\label{fig1}
+\end{figure}
+
+%\subsection{Project file sources}
+%The following list shows the different file sources for this project:
+%\begin{itemize}
+%	\item Getting Started Guide and Documentation: \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Documents/Manuals}{GitHub manuals}
+%	\item PCB and Schematics: \href{https://workspace.circuitmaker.com/Projects/Details/Gonzalo-Castelli/FPGA-ITBA}{Circuit Maker} and \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Altium}{GitHub Altium Project Files}
+%	\item \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Examples/LedExample}{Example code} for the Lattice Radiant software.
+%\end{itemize}
+
+\section{Primeros pasos}
+Para comenzar a utiliza la plataforma hay que cumplir tres pasos. El primero es descargar e instalar el software, después crear un proyecto incluyendo los archivos de código necesarios y por último cargar el programa en la memoria interna del FPGA usando un cable USB.
+
+\subsection{Descargando el software}
+Antes de usar la placa, es necesario descargar el software para programar la FPGA Lattice iCE40-UP5K. En este tutorial se va a utilizar la distribución basada en \href{https://apiodoc.readthedocs.io/en/stable/index.html}{Apio Open Source Ecosystem for FPGAs}, la cual permite sintetizar, implementar y verificar el código y también programar la FPGA mediante un puerto USB. \href{https://apiodoc.readthedocs.io/en/stable/index.html}{Python 3.7+} debe ser instalado previamente para poder instalar Apio.
+
+Durante la instalación de Python debe asegurarse de seleccionar "\textbf{Customize Installation}". Luego, dentro de las opciones adicionales, seleccionar la instalación de \textit{pip},como se muestra en la Fig. \ref{fig2}, dado que se necesita para descargar e instalar el paquete de Apio.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/python_install.png}
+    \caption{Configuración de la instalación de Python}
+    \label{fig2}
+\end{figure}
+
+Una vez finalizada la instalación de Python con pip, se procede a instalar Apio. En Windows, se debe abrir una consola de comandos e ingresar:
+\begin{center}
+	\texttt{pip install -U apio}
+\end{center}
+Cuando finaliza, es necesario instalar los paquetes adicionales de Apio utilizando el siguiente comando:
+\begin{center}
+	\texttt{apio install -{}-all}
+\end{center}
+Esta proceso puede demorar varios minutos.
+
+\subsection{Creando un nuevo proyecto}
+Una vez instalado el software, el siguiente paso es crear una nueva carpeta para el proyecto, y empezar as escribir el código. Un ejemplo de proyecto que utiliza el LED RGB montado en la placa esta disponible en nuestro repositorio Github. Después de descargar los archivos, se colocan en una carpeta fácilmente accesible desde donde ejecutaremos el código.
+
+Use el comando \texttt{cd} seguido por la dirección de la carpeta de proyecto para seleccionarla y trabajar sobre ella. Por ejemplo, si el proyecto esta en una carpeta llamada "fpga\_project" en el Escritorio, use:
+\begin{center}
+	\texttt{cd Desktop/fpga\_project}
+\end{center}
+
+Una vez seleccionada la carpeta a utilizar, generamos el archivo de configuración .init adecuado para nuestra placa, ya que Apio soporta varias plataformas de FPGA diferentes. Para hacer esto, use el comando:
+\begin{center}
+	\texttt{apio init -{}-board upduino2}
+\end{center}
+
+Ahora puede usar el comando:
+\begin{center}
+	\texttt{apio build}
+\end{center}
+ para asegurar que el proyecto esta correctamente configurado. La carpeta debería contener al menos 3 archivos; un .v con el código del programa, un .pcf con información de entradas y salidas para el programa, y el archivo .init que acabamos de crear. Si el programa compila correctamente, puede pasar a programar la placa FPGA.
+ 
+\subsection{Programando la placa}
+Ahora que el proyecto esta armado, podemos cargar el programa a nuestra placa para ejecutarlo.
+
+Conecte la FPGA a la PC con un cable USB, espere unos segundos para que Windows configure los controladores, y luego utilice el siguiente comando para programar la placa:
+\begin{center}
+	\texttt{apio upload}
+\end{center}
+
+El proceso puede demorar algunos segundos. Si todo funcionó correctamente, la placa debería configurarse desde la memoria flash interna y el LED comenzará a prenderse y a cambiar de color.
+
+\subsection{Simulando el diseño}
+Para simular el diseño ejecutar el siguiente comando:
+\begin{center}
+	\texttt{apio sim}
+\end{center}
+
+Se cargará el visualizador \href{http://gtkwave.sourceforge.net}{GTKWave} y se podrá analizar el resultado de la simulación.
+
+\input{gs_common_ES.tex}
+\end{document}

@@ -1,0 +1,20 @@
+Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~PCB_Project1.PrjPCB|ReportField=ProjectFullPath~C:\Users\Gonzalo Castelli\Desktop\ITBA\Lattice\Altium\PCB_Project1.PrjPCB|ReportField=Title~Bill of Materials For Project [PCB_Project1.PrjPCB] (No PCB Document Selected)|ReportField=TotalQuantity~74|ReportField=ReportTime~07:09:44 p.m.|ReportField=ReportDate~05/04/2018|ReportField=ReportDateTime~05/04/2018 07:09:44 p.m.|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~05/04/2018|ReportField=CurrentTime~07:09:17 p.m.|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\Gonzalo Castelli\Desktop\ITBA\Lattice\Altium\fpga.SchDoc|ReportField=DocumentName~fpga.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~29/09/2017|ReportField=Organization~|ReportField=ProjectName~PCB_Project1.PrjPCB|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~PCB_Project1.PrjPCB|ReportField=DataSourceFullPath~C:\Users\Gonzalo Castelli\Desktop\ITBA\Lattice\Altium\PCB_Project1.PrjPCB
+Cap Semi|Capacitor (Semiconductor SIM Model)|C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C29, C30|6-0805_N|Cap Semi|28
+Cap|Capacitor (Semiconductor SIM Model)|C31, C31a, C32, C33, C34|C1206|Cap Semi|5
+CDBU0520||D1, D3|DSO-G2/D2.2new|CDBU0520|2
+LED3|Typical BLUE SiC LED|D2|6-0805_N|LED3|1
+FlashMemory|Flash W25Q32JVSSIQ|FLASHMEM1|SOP8FlashCorrect|Flash Memory W25Q32JVSSIQ|1
+iCE40 Ultra 2K|iCE40-UP5K FPGA|FPGA1|SLAB-QFN48-7X7-MDvias|Component_1|1
+FB_60ohm|Inductor|L1, L2|J1-0603|Inductor|2
+600 OHM 800MA|Inductor|L3, L4, L5|J1-0603|Inductor|3
+ledRGB-CLMVB-FKA|ledRGB-CLMVB-FKA|LED1|ledRGB|ledRGB-CLMVB-FKA|1
+microUSB|CONN RCPT MICRO USB AB R/A SMD|microUSB1|microUSB connector corr2|CONN RCPT MICRO USB AB R/A SMD|1
+MEMS SiT1602|OSC MEMS 12.0000MHZ H/LV-CMOS|OSC1|oscMEMS1602|SIT1602AC-13-33E-12.000000G|1
+Header 2X2|Header, 2-Pin, Dual row|P1|4x4HeaderSq|Header 2X2|1
+Header 12|Header, 12-Pin|P2, P4|HDR1X12|Header 12|2
+Header 6X2|Header, 6-Pin, Dual row|P3|HDR2X6|Header 6X2|1
+Res3|Resistor|R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R20|6-0805_N|Res3|20
+REG1.2V|REG 1.2V|REG1|1-2Regulator|REG1.2V|1
+Switch Tactile SPST-NO 50MA 32V|Switch Tactile SPST-NO 50MA 32V|SW1|switchSMD|Switch Tactile SPST-NO 50MA 32V|1
+FT2232HL-Reel|Dual High Speed USB To Multipurpose UART/FIFO IC, LQFP-64, Tape and Reel|U1|LQFP-64_N|FT2232HL-Reel|1
+REG1117-3.3|800mA and 1A Low Dropout Positive Regulator 2.85V, 3.3V, 5V, and Adjustable|U2|ZZ311|REG1117-3.3|1

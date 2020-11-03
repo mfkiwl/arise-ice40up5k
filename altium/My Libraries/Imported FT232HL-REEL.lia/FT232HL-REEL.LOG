@@ -1,0 +1,27 @@
+PCAD Importer Log
+Project : FT232HL-REEL.LibPkg
+
+Section : C:\Users\Gonzalo Castelli\Desktop\ITBA\Lattice 2\Altium\FT232HL-REEL.lia
+    Section : PCB Library - FT232HL-REEL.PcbLib
+        Section : Load Messages
+            Warning - 1 : Skipping Token FT232HL-REEL On Line 162
+            Warning - 1 : Skipping Token attachedSymbol On Line 669
+        EndSection
+
+        Section : Import Messages
+        EndSection
+    EndSection
+
+    Section : SCH Library - FT232HL-REEL.SchLib
+        Section : Parsing Messages
+            Warning - 1 : Skipping Token padStyleDef On Line 9
+            Warning - 1 : Skipping Token multiLayer On Line 84
+            Warning - 1 : Skipping Token layerContents On Line 134
+            Warning - 1 : Skipping Token layerContents On Line 140
+            Warning - 1 : Skipping Token layerContents On Line 151
+        EndSection
+
+        Section : Generating SCH Library - FT232HL-REEL.SchLib
+        EndSection
+    EndSection
+EndSection

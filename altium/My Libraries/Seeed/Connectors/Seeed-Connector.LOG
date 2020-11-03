@@ -1,0 +1,13 @@
+Importer Log Report
+Project : Seeed-Connector.PrjPcb
+
+Section : Analyze Document - \\VBOXSVR\VirtualBox_Swap\OPL-new\Seeed-Connector.lbr
+    Analyzing data of \\VBOXSVR\VirtualBox_Swap\OPL-new\Seeed-Connector.lbr
+    Load settings
+    Load layers 158
+    Load Library library
+    Load Library ""
+    Load Packages 44
+    Load Symbols 34
+    Load DeviceSets 61
+EndSection

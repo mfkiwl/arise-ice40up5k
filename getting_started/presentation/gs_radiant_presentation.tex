@@ -1,0 +1,171 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{BlueITBA}{HTML}{00558c} 
+\colorlet{beamer@blendedblue}{BlueITBA}
+\setbeamertemplate{caption}{\scriptsize\insertcaption}
+\setbeamertemplate{itemize items}[circle]
+%\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subitem}{\raisebox{0.2em}{\scalebox{0.65}{$\blacktriangleright$}}}   % Second level
+
+%\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+
+\usepackage{sansmathfonts}				% Sans Serif equations
+\usepackage[T1]{fontenc}					% Output font encoding for international characters
+\usepackage[utf8]{inputenc}				% Encoding of files: utf8
+\renewcommand*\familydefault{\sfdefault} 		% Sans Serif as default font
+\usepackage{verbatim}
+ 
+% Setup the language and its properties (choose only one)
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel}
+\addto\captionsspanish{\renewcommand{\contentsname}{Contenido}}
+
+\usepackage{ulem}
+\usepackage{graphicx}
+\usepackage{tikz}						% Required for title page
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=white,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=blue,    
+}
+\usepackage{listings}
+
+\title[Primeros Pasos]{Primeros Pasos Radiant}
+\subtitle{}
+\author{Dr. Ing. Pablo \textsc{Cossutta}}
+%\institute[]{Dr. Ing. Miguel \textsc{Aguirre} - Ing. Analía \textsc{Douthat}}
+\date{Octubre 2019}
+\logo{\includegraphics[height=1.5cm]{../../logo_itba.png}} 
+ 
+\begin{document}
+\beamertemplatenavigationsymbolsempty % Disable Nav Bar
+% Title and Intro
+\maketitle
+\logo{}
+
+\begin{frame}{Tutorial}
+¿Qué se va a hacer?
+\begin{itemize}
+	\item Instalar Radiant
+	\begin{itemize}
+		\item Requiere registrarse
+		\item Requiere licencia
+	\end{itemize}
+	\item Crear un proyecto
+	\item Cargar los archivos en el proyecto
+	\item Synthesis, Map, Place \& Route, Bitstream
+	\item Cargar el diseño
+\end{itemize}
+¿Qué se necesita?
+\begin{itemize}
+	\item Archivo HDL (top.v)
+	\item Constraints para síntesis (impl\_1.ldc)
+	\item Constraints para implementación (impl\_1.pdc)	
+\end{itemize}
+\end{frame}
+    
+\begin{frame}[fragile]{top.v - Definition and clock divider}
+\begin{lstlisting}[language=Verilog]
+module top(
+   output RGB0,
+   output RGB1,
+   output RGB2,
+   input clk
+);
+
+   reg [21:0] div = 22'd0;
+   always @(posedge clk) div <= div + 1'd1;
+
+   reg en;
+   always @(posedge clk) begin
+      if (div==22'd0) en <= 1'b1;
+      else en <= 1'b0;
+   end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{top.v - Decoding}
+\begin{lstlisting}[language=Verilog]
+   reg [2:0] rgb_reg = 3'd0;
+   always @(posedge clk) begin
+      if (en) begin
+         case (rgb_reg)
+            3'b000:  rgb_reg <= 3'b001;
+            3'b001:  rgb_reg <= 3'b010;
+            3'b010:  rgb_reg <= 3'b100;
+            3'b100:  rgb_reg <= 3'b000;
+            default: rgb_reg <= 3'b000;
+         endcase
+      end
+   end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{top.v - RGB Instantiation}
+\begin{lstlisting}[language=Verilog]
+   RGB #(
+     .CURRENT_MODE ("1"),
+     .RGB0_CURRENT ("0b000001"),
+     .RGB1_CURRENT ("0b000001"),
+     .RGB2_CURRENT ("0b000001")
+   ) RGB_INST (
+     .CURREN   (1'b1),        // I
+     .RGBLEDEN (1'b1),        // I
+     .RGB0PWM  (rgb_reg[0]),  // I - Blue
+     .RGB1PWM  (rgb_reg[1]),  // I - Green
+     .RGB2PWM  (rgb_reg[2]),  // I - Red
+     .RGB0     (RGB0),        // O
+     .RGB1     (RGB1),	   // O
+     .RGB2     (RGB2)         // O
+   );
+endmodule
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Restricciones (Constraints)}
+Restricciones lógicas
+\begin{itemize}
+	\item Generalmente necesarias para la síntesis
+\end{itemize}
+\begin{block}{impl\_1.ldc}
+\begin{lstlisting}
+create_clock -name {clk} -period 83.333 
+-waveform \{0.000 41.666\} [get_ports clk]
+\end{lstlisting}
+\end{block}
+\vfill
+Restricciones físicas
+\begin{itemize}
+	\item Necesarias para la implementación
+\end{itemize}
+\begin{block}{impl\_1.pdc}
+\begin{lstlisting}
+ldc_set_location -site {35} [get_ports clk]
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Trabajo en clase (Hands On)}
+Utilizando los conocimientos adquiridos y la documentación correspondiente a la plataforma, implementar el siguiente diseño:
+\begin{lstlisting}[language=Verilog]
+module top(
+   output j05,
+   input j01, j02, j03, j04);
+
+   assign j05 = j01 & j02 & j03 & j04;
+endmodule
+\end{lstlisting}
+Cargar en la FPGA y analizar:
+\begin{itemize}
+	\item Analizar RTL
+	\item Modificar lógica y analizar recursos
+	\item Agregar una 5$^{ta}$ entrada adicional, repetir
+\end{itemize}
+\end{frame}
+
+\end{document}

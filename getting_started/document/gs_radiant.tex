@@ -1,0 +1,157 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[11pt, a4paper, oneside]{article}
+\usepackage[onehalfspacing]{setspace}		% One half spacing
+\usepackage{hyperref}					% Hyperlinks on pdf (Should be called before Geometry)
+\usepackage[a4paper, 					% Page Layout
+                     %showframe,				% This shows the frame
+                     twoside, includehead,
+                     footskip=7mm, headsep=6mm, headheight=4.8mm,
+                     marginparsep=2mm, marginparwidth=22mm,
+                     top=25mm, bottom=25mm, inner=30mm, outer=25mm]{geometry}
+\usepackage{sansmathfonts}				% Sans Serif equations
+\usepackage[T1]{fontenc}					% Output font encoding for international characters
+\usepackage[utf8]{inputenc}				% Encoding of files: utf8
+\renewcommand*\familydefault{\sfdefault} 		% Sans Serif as default font
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{array}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\urlstyle{same}
+\usepackage{tikz}
+\RequirePackage{caption} 				% Caption customization
+\captionsetup{justification=centerlast,font=small,labelfont=sc,margin=1cm}
+
+\usepackage{array}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}p{#1}}
+\newcolumntype{R}[1]{>{\PreserveBackslash\raggedleft}p{#1}}
+\newcolumntype{L}[1]{>{\PreserveBackslash\raggedright}p{#1}}
+
+\begin{document}
+\begin{titlepage}
+	\onehalfspacing
+	\enlargethispage{0.65\baselineskip}
+	\begin{tikzpicture}[remember picture, overlay]
+		\coordinate (top_right) at 
+		    ([xshift=-2.5cm, yshift=-2.5cm]current page.north east);
+		\coordinate (top_left) at 
+		    ([xshift=2.3cm, yshift=-1.8cm]current page.north west);
+		\coordinate (bottom_right) at 
+		    ([xshift=-1.8cm, yshift=1.8cm]current page.south east);
+		\node[inner sep=0, anchor=north east] at (top_right) {\href{http://www.itba.edu.ar}{\includegraphics[height=19mm, trim={180 200 200 200}, clip]{figs/logo_itba.png}}};
+		\draw[double, line width = 0.5pt] (top_left) rectangle (bottom_right);
+	\end{tikzpicture}
+	\par
+	\vspace{-0.8cm}
+	\noindent \textbf{CENTRO DE INVESTIGACIÓN Y DESARROLLO EN}\par
+	\noindent \textbf{ELECTRONICA INDUSTRIAL (CIDEI)}\par
+	\vspace{3cm}
+	\begin{center}
+		{\Huge \textbf{ARiCE Plattform}\par}
+		{\huge \textbf{Getting Started Radiant}\par}
+	\end{center}
+	\vspace{1cm}
+	\begin{center}
+		\includegraphics[width=8cm]{figs/fig1a.png}
+	\end{center}
+	\vfill
+	\noindent \textbf{AUTHORS:} Dr. Ing. Pablo \textsc{Cossutta} - Ing. Gonzalo \textsc{Castelli} \par
+	\vfill
+	\begin{center}
+		\textbf{CIUDAD AUTÓNOMA DE BUENOS AIRES}\\
+		\textbf{2018-2019}\par
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This project is an open-source platform,shown on Fig. \ref{fig1},  based on a low cost and low consumption FPGA chip from \href{http://www.latticesemi.com}{Lattice Semiconductor}, aiming to be used in a wide range of signal processing and control applications, both for education and the industry.
+%
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm]{figs/fig1a.png}\\
+	\includegraphics[width=6cm]{figs/fig1b.png}%
+	\includegraphics[width=6cm]{figs/fig1c.png}
+	\caption{Board's view}
+	\label{fig1}
+\end{figure}
+
+%\subsection{Project file sources}
+%The following list shows the different file sources for this project:
+%\begin{itemize}
+%	\item Getting Started Guide and Documentation: \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Documents/Manuals}{GitHub manuals}
+%	\item PCB and Schematics: \href{https://workspace.circuitmaker.com/Projects/Details/Gonzalo-Castelli/FPGA-ITBA}{Circuit Maker} and \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Altium}{GitHub Altium Project Files}
+%	\item \href{https://github.com/pcossutta/Lattice-FPGA/tree/master/Examples/LedExample}{Example code} for the Lattice Radiant software.
+%\end{itemize}
+
+\section{Getting started}
+Three main steps are necessary to use the board if you are starting from scratch. The first is to download the software and get a license, the second is to create a new project and include the code files needed and finally load the program to the onboard memory using a USB cable.
+
+\subsection{Download the software}
+Before using the board, it is necessary to set up the software to program the Lattice iCE40-UP5K FPGA chip. It is recommended to use \href{http://www.latticesemi.com/Products/DesignSoftwareAndIP/FPGAandLDS/Radiant}{Lattice Radiant software}, which supports iCE40 UltraPlus and offers all the best in class tools and features to develop edge applications effectively and efficiently. Free registration is required to download the software, and a license can be requested with no charge after providing the MAC address of the computer it will run on. 
+This development also supports the \href{http://www.clifford.at/icestorm/}{iceStorm project}, Open Source toolchain by Clifford Wolf although its usage is not covered in this document.
+
+\subsection{Create a new project}
+After having installed and licensed the software, the next step is to create a new project in the Lattice Radiant Software and start writing HDL code. An example code that uses the onboard RGB LED is available for download at the GitHub repository of this project. After downloading the files, open the Lattice Radiant application and go to:
+\begin{center}
+	File $\rightarrow$ Open $\rightarrow$ Project...
+\end{center}
+Browse the folder you downloaded from GitHub and select the \texttt{getting\_started.rdf} file. You can now jump to the next section. To learn how to manually create a new project, click on the "New Project" icon in the start page, or by going to:
+\begin{center}
+	File $\rightarrow$ New $\rightarrow$ Project...
+\end{center}
+Follow the instructions of the wizard, and name the project "getting\_started". After clicking "Next", a new window will ask for source files. Click the "Add Source..." button and load the Verilog File you downloaded from the GitHub repository called "top.v". Check both boxes at the bottom of the window to generate all the necessary files in the project folder. The window should look like Fig. \ref{fig2}.
+%
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.8]{figs/fig2.png}
+	\caption{Adding source files to the new project}
+	\label{fig2}
+\end{figure}
+
+Click "Next", and select the "iCE40UP5K" device. In the package pull-down menu, choose "SG48" and in the Part Number menu, pick "iCE40UP5K-SG48I". The window should look like Fig. \ref{fig3}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.71]{figs/fig3.png}
+	\caption{Selecting the device}
+	\label{fig3}
+\end{figure}
+
+Then, click "Next" and "Finish" to conclude with the wizard. Now, replace the content of the \texttt{impl\_1.ldc}  and \texttt{impl\_1.pdc} files with the ones from our example in the GitHub repository. The project has now been set up, and the last step remaining is to load the code to the memory of the board.
+
+\subsection{Board Programming}
+Now that the project is fully set up, it is necessary to synthesize the design to create the export files. Click on the green play button on the upper-left corner to do so. The process should succeed, even though warnings will appear. Connect the FPGA board to the PC using the USB cable. To set up the device for programming, go to:
+\begin{center}
+	Tools $\rightarrow$ Programmer
+\end{center}
+In the Radiant Programmer window, the iCE40UP5K device should be displayed in the list. Select it by clicking on it, and go to:
+\begin{center}
+	Edit $\rightarrow$ Device Properties...
+\end{center}
+Configure the window so it looks like Fig. \ref{fig4}. Do not forget to include the programming file path, which was generated when doing the synthesis and which has a ".bin" extension. In our case, the file is \texttt{getting\_started\_impl1.bin}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.8]{figs/fig4.png}
+    \caption{Programming properties}
+    \label{fig4}
+\end{figure}
+
+Click "OK" to exit the window and to finally load the program to the board's memory go to:
+\begin{center}
+ Run $\rightarrow$ Program Device
+\end{center}
+If done successfully, the RGB LED of the FPGA board should be flashing in colors. 
+
+\input{gs_common.tex}
+\end{document}
+

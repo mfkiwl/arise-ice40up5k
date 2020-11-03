@@ -1,0 +1,21 @@
+Output: Gerber Files
+Type  : Gerber
+From  : PCB Document [FPGA.PcbDoc]
+   Generated File[FPGA.GTL]
+   Generated File[FPGA.GBL]
+   Generated File[FPGA.GTO]
+   Generated File[FPGA.GTS]
+   Generated File[FPGA.GBS]
+   Generated File[FPGA.GBO]
+   Generated File[FPGA.GKO]
+   Generated File[FPGA.GM1]
+   Generated File[FPGA.GM4]
+   Generated File[FPGA.RUL]
+   Generated File[FPGA.EXTREP]
+   Generated File[FPGA.REP]
+
+
+Files Generated   : 12
+Documents Printed : 0
+
+Finished Output Generation At 3:54:37 PM On 2/5/2019
