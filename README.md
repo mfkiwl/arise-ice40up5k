@@ -7,7 +7,7 @@ This development supports the Open Source toolchain by [Clifford Wolf](http://ww
 
 ## Getting Started
 
-- If you are starting from scratch, read our [Getting Started Guide](Documents/Manuals/FPGA_ITBA.pdf) to set up the software to program the FPGA board. Further documentation can be found in the ["getting_started" folder](Documents).
+- If you are starting from scratch, read our [Getting Started Guide](getting_started/gs_apio.pdf) to set up the software to program the FPGA board. Further documentation can be found in the ["getting_started" folder](Documents).
 - Example code for the recommended software can be found in the ["examples" folder](getting_started/example).
 - You can download the Schematics and board files by going to the ["altium" folder](Altium) in this repository or by visiting our project in [Circuit Maker](https://workspace.circuitmaker.com/Projects/Details/Gonzalo-Castelli/FPGA-ITBA), a free PCB design software for the Open Source Hardware community.
 - KiCAD version in progress
