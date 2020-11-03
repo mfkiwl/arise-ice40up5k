@@ -3,7 +3,7 @@ Low cost development board based on UP5K.
 This is an open-source platform based on a low cost FPGA chip from Lattice, aiming to be used in a wide range of signal processing and control applications, both for education and the industry.
 This development supports the Open Source toolchain by [Clifford Wolf](http://www.clifford.at/icestorm/).
 
-<img src="https://github.com/pcossutta/arise/blob/master/getting_started/document/figs/fig1a.png" width="468" height="421">
+![ARiCE](/getting_started/document/figs/fig1a.png)
 
 ## Getting Started
 
